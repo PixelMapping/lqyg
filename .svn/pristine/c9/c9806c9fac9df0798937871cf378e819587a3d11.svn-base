@@ -1,0 +1,1 @@
+.main{width:100%;background:#fff}.detail .ant-row{margin-bottom:25px}.detail .ant-col{display:flex}.detail .ant-col span:first-child{width:100px;text-align:right;margin-right:15px}.imgs img{width:200px;height:200px}

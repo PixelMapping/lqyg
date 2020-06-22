@@ -1,0 +1,19 @@
+
+import HomeOutlined from '@ant-design/icons/HomeOutlined';
+import WalletOutlined from '@ant-design/icons/WalletOutlined';
+import FileTextOutlined from '@ant-design/icons/FileTextOutlined';
+import PropertySafetyOutlined from '@ant-design/icons/PropertySafetyOutlined';
+import AuditOutlined from '@ant-design/icons/AuditOutlined';
+import CarryOutOutlined from '@ant-design/icons/CarryOutOutlined';
+import LockOutlined from '@ant-design/icons/LockOutlined'
+
+export default {
+  HomeOutlined,
+WalletOutlined,
+FileTextOutlined,
+PropertySafetyOutlined,
+AuditOutlined,
+CarryOutOutlined,
+LockOutlined
+}
+    

@@ -1,0 +1,67 @@
+@import '~antd/es/style/themes/default.less';
+
+.main {
+  width: 100%;
+  background: @component-background;
+}
+.detail{
+  
+  .ant-row{
+    margin-bottom: 25px;
+  }
+  .ant-col{
+    display: flex;
+    span:nth-child(1){
+      width: 100px;
+      text-align: right;
+      margin-right: 15px;
+    }
+  }  
+}
+.batch-card{
+  position: relative;
+  .des{
+    position: absolute;
+    left: 120px;
+    top: 22px;
+    color: #8C8C8C;
+  }
+}
+
+.import{
+  .describe{
+    color: #8C8C8C;
+    margin-top: 22px;
+  }
+  .info{
+    display: flex;
+    .lt{
+      border-right: 1px solid #DEDEDE;
+    }
+    .rt{
+      padding-left: 31px;
+    }
+    .num{
+      color: #FAAD14;
+      font-size: 22px;
+    }
+    div{
+      flex: 1;
+    }
+  }
+}
+
+.sucess{
+  text-align: center;
+  padding: 200px 0;
+  .tit{
+    font-size: 22px;
+    color: #434343;
+    font-weight: bold;
+    margin: 35px 0 0;
+  }
+  .des{
+    color: #8C8C8C;
+    margin: 24px 0;
+  }
+}

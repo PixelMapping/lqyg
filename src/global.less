@@ -1,0 +1,164 @@
+@import '~antd/es/style/themes/default.less';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+@media (max-width: @screen-xs) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 兼容IE11
+@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body .ant-design-pro > .ant-layout {
+    min-height: 100vh;
+  }
+}
+
+.mb24{
+  margin-bottom: 24px !important;
+}
+.mt24{
+  margin-top: 24px !important;
+}
+.ml20{
+  margin-left: 20px;
+}
+.mr10{
+  margin-right: 10px !important;
+}
+.mrlr20{
+  margin: 0 20px !important;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mr10{
+  margin-right: 10px;
+}
+.ml130{
+  margin-left: 130px;
+}
+.mt16{
+  margin-top: 16px !important;
+}
+.pr8{
+  padding-right: 8px !important;
+}
+.pr32{
+  padding-right: 32px !important;
+}
+.pl16{
+  padding-left: 16px !important;
+}
+
+
+.w100{
+  width: 100px !important;
+}
+.w200{
+  width: 200px !important;
+}
+.w300{
+  width: 300px !important;
+}
+.wall{
+  width: 100% !important;
+}
+.w250{
+  width: 250px !important;
+}
+
+.w1200{
+  width: 1200px !important;
+}
+.w1300{
+  width: 1300px !important;
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+}
+
+#loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-size: 20px;
+}
+
+.ant-pro-sider-menu-logo img{
+  width: 208px;
+  height: 64px !important;
+}
+.footer{
+  text-align: center;
+  color: #999;
+}
+.reject{
+  font-weight: bold;
+  color: #ff0000;
+}
+#loading{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, .9);
+}
+.flex-1{
+  flex: 1;
+}
+#YSF-BTN-HOLDER{
+  bottom:60px !important;
+}

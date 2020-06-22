@@ -1,0 +1,253 @@
+import { ApplyPluginsType, dynamic } from 'F:/lqyg/node_modules/@umijs/runtime';
+import { plugin } from './plugin';
+
+const routes = [
+  {
+    "path": "/user",
+    "component": dynamic({ loader: () => import(/* webpackChunkName: 'layouts__UserLayout' */'F:/lqyg/src/layouts/UserLayout'), loading: require('@/components/PageLoading/index').default}),
+    "routes": [
+      {
+        "name": "login",
+        "path": "/user/login",
+        "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__user__login' */'F:/lqyg/src/pages/user/login'), loading: require('@/components/PageLoading/index').default}),
+        "exact": true
+      }
+    ]
+  },
+  {
+    "path": "/",
+    "component": dynamic({ loader: () => import(/* webpackChunkName: 'layouts__SecurityLayout' */'F:/lqyg/src/layouts/SecurityLayout'), loading: require('@/components/PageLoading/index').default}),
+    "routes": [
+      {
+        "path": "/",
+        "component": dynamic({ loader: () => import(/* webpackChunkName: 'layouts__BasicLayout' */'F:/lqyg/src/layouts/BasicLayout'), loading: require('@/components/PageLoading/index').default}),
+        "routes": [
+          {
+            "name": "首页",
+            "icon": "HomeOutlined",
+            "path": "/home",
+            "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__home' */'F:/lqyg/src/pages/home'), loading: require('@/components/PageLoading/index').default}),
+            "exact": true
+          },
+          {
+            "name": "资产管理",
+            "icon": "WalletOutlined",
+            "path": "/assets",
+            "routes": [
+              {
+                "path": "/assets/account",
+                "name": "账号管理",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__assets' */'F:/lqyg/src/pages/assets'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/assets/recharge",
+                "name": "账户充值",
+                "hideInMenu": true,
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__assets__recharge' */'F:/lqyg/src/pages/assets/recharge'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/assets/record",
+                "name": "充值记录",
+                "hideInMenu": true,
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__assets__record' */'F:/lqyg/src/pages/assets/record'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/assets/detail",
+                "name": "充值记录详情",
+                "hideInMenu": true,
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__assets__detail' */'F:/lqyg/src/pages/assets/detail'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/assets/card",
+                "name": "银行账户",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__assets__card' */'F:/lqyg/src/pages/assets/card'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              }
+            ]
+          },
+          {
+            "name": "发票管理",
+            "icon": "FileTextOutlined",
+            "path": "/invoice",
+            "routes": [
+              {
+                "path": "/invoice/apply",
+                "name": "申请发票",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__invoice__apply' */'F:/lqyg/src/pages/invoice/apply'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/invoice/record",
+                "name": "发票记录",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__invoice__record' */'F:/lqyg/src/pages/invoice/record'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/invoice/detail",
+                "name": "发票记录详情",
+                "hideInMenu": true,
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__invoice__detail' */'F:/lqyg/src/pages/invoice/detail'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/invoice/receiving",
+                "name": "收件信息",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__invoice__receiving' */'F:/lqyg/src/pages/invoice/receiving'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/invoice/invoice",
+                "name": "发票信息",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__invoice__invoice' */'F:/lqyg/src/pages/invoice/invoice'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              }
+            ]
+          },
+          {
+            "name": "结算管理",
+            "icon": "PropertySafetyOutlined",
+            "path": "/settlement",
+            "routes": [
+              {
+                "path": "/settlement/money",
+                "name": "批量打款",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__settlement__money' */'F:/lqyg/src/pages/settlement/money'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/settlement/batch",
+                "name": "打款批次",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__settlement__batch' */'F:/lqyg/src/pages/settlement/batch'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/settlement/detail",
+                "name": "打款详情",
+                "hideInMenu": true,
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__settlement__detail' */'F:/lqyg/src/pages/settlement/detail'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/settlement/detailTable",
+                "name": "打款明细",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__settlement__detailTable' */'F:/lqyg/src/pages/settlement/detailTable'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              }
+            ]
+          },
+          {
+            "name": "签约管理",
+            "icon": "AuditOutlined",
+            "path": "/signing",
+            "routes": [
+              {
+                "path": "/signing/info",
+                "name": "个人信息",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__signing__info' */'F:/lqyg/src/pages/signing/info'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/signing/detail",
+                "name": "个人详情",
+                "hideInMenu": true,
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__signing__detail' */'F:/lqyg/src/pages/signing/detail'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/signing/batch",
+                "name": "签约批次",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__signing__batch' */'F:/lqyg/src/pages/signing/batch'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/signing/import",
+                "name": "导入批量签约",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__signing__import' */'F:/lqyg/src/pages/signing/import'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/signing/detailInfo",
+                "name": "签约明细",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__signing__detailInfo' */'F:/lqyg/src/pages/signing/detailInfo'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              }
+            ]
+          },
+          {
+            "name": "任务大厅",
+            "icon": "CarryOutOutlined",
+            "path": "/task",
+            "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__task' */'F:/lqyg/src/pages/task'), loading: require('@/components/PageLoading/index').default}),
+            "exact": true
+          },
+          {
+            "path": "/task/addTask",
+            "name": "发布任务",
+            "hideInMenu": true,
+            "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__task__addTask' */'F:/lqyg/src/pages/task/addTask'), loading: require('@/components/PageLoading/index').default}),
+            "exact": true
+          },
+          {
+            "path": "/task/detail",
+            "name": "任务详情",
+            "hideInMenu": true,
+            "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__task__detail' */'F:/lqyg/src/pages/task/detail'), loading: require('@/components/PageLoading/index').default}),
+            "exact": true
+          },
+          {
+            "path": "/",
+            "redirect": "/home",
+            "exact": true
+          },
+          {
+            "name": "权限管理",
+            "icon": "LockOutlined",
+            "path": "/authority",
+            "authority": [
+              "admin"
+            ],
+            "routes": [
+              {
+                "path": "/authority/user",
+                "name": "用户管理",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__authority__user' */'F:/lqyg/src/pages/authority/user'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              },
+              {
+                "path": "/authority/role",
+                "name": "角色管理",
+                "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__authority__role' */'F:/lqyg/src/pages/authority/role'), loading: require('@/components/PageLoading/index').default}),
+                "exact": true
+              }
+            ]
+          },
+          {
+            "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__404' */'F:/lqyg/src/pages/404'), loading: require('@/components/PageLoading/index').default}),
+            "exact": true
+          }
+        ]
+      },
+      {
+        "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__404' */'F:/lqyg/src/pages/404'), loading: require('@/components/PageLoading/index').default}),
+        "exact": true
+      }
+    ]
+  },
+  {
+    "component": dynamic({ loader: () => import(/* webpackChunkName: 'p__404' */'F:/lqyg/src/pages/404'), loading: require('@/components/PageLoading/index').default}),
+    "exact": true
+  }
+];
+
+// allow user to extend routes
+plugin.applyPlugins({
+  key: 'patchRoutes',
+  type: ApplyPluginsType.event,
+  args: { routes },
+});
+
+export { routes };
