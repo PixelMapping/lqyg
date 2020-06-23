@@ -1,4 +1,4 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {  SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { ClickParam } from 'antd/es/menu';
 import React from 'react';
@@ -60,10 +60,12 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
           </Menu.Item>
         )}
         {menu && <Menu.Divider />}
-
+          
         <Menu.Item key="logout">
-          <LogoutOutlined />
           退出登录
+        </Menu.Item>
+        <Menu.Item key="remove">
+          解除微信绑定
         </Menu.Item>
       </Menu>
     );

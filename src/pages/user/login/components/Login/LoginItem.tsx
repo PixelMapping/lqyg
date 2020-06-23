@@ -2,7 +2,7 @@ import { Button, Col, Input, Row, Form, message } from 'antd';
 import React, { useState, useCallback, useEffect } from 'react';
 import omit from 'omit.js';
 import { FormItemProps } from 'antd/es/form/FormItem';
-import { getFakeCaptcha } from '@/services/login';
+import { getFakeCaptcha ,bindCode} from '@/services/login';
 
 import ItemMap from './map';
 import LoginContext, { LoginContextProps } from './LoginContext';
@@ -79,8 +79,8 @@ const LoginItem: React.FC<LoginItemProps> = (props) => {
     if(!mobile){
       message.info("请输入手机号！")
       return 
-    }
-    const result = await getFakeCaptcha({phone:mobile});
+    }    
+    var result = props.name=='captcha'? await getFakeCaptcha({phone:mobile}) : await bindCode({phone:mobile});
     if (result === false) {
       return;
     }

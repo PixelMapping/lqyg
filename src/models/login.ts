@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { history, Reducer, Effect } from 'umi';
 
-import { fakeAccountLogin } from '@/services/login';
+import { fakeAccountLogin,bind } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
@@ -32,15 +32,13 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, {phone:payload.mobile,code:payload.captcha});
-      // const response = yield call(fakeAccountLogin, payload);
-      // yield put({
-      //   type: 'changeLoginStatus',
-      //   payload: response,
-      // });
-      // Login successfully
+      let response = {result:false};
+      if(payload.bind){
+        response = yield call(bind, {phone:payload.mobile,bindCode:payload.bindcode,openId:payload.openId})
+      }else{
+        response = yield call(fakeAccountLogin, {phone:payload.mobile,code:payload.captcha})
+      }
       if (response.result) {
-        console.log(response)
         localStorage.setItem('token',response.data.token) 
         localStorage.setItem('userInfo',JSON.stringify(response.data.user))
         localStorage.setItem('menuList',JSON.stringify(response.data.menuList||'[]'))
@@ -55,10 +53,7 @@ const Model: LoginModelType = {
         localStorage.removeItem('token')
         localStorage.removeItem('userInfo')
         history.replace({
-          pathname: '/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
+          pathname: '/user/login',          
         });
       }
     },

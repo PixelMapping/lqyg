@@ -219,7 +219,7 @@ export default (props: any) => {
               {
                 list.map((item: any) => {
                   return (
-                    <Option value={item.id} key={item.id}>{item.name}</Option>
+                    <Option value={item.id+''} key={item.id}>{item.name}</Option>
                   )
                 })
               }

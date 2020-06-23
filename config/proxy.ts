@@ -18,10 +18,10 @@ export default {
     //74春详
     // 'http://123.56.68.98:8881
     '/client/': {
-      target: 'https://lqclient.shunshuitong.net',
+      target: 'http://123.56.68.98:8881',
       changeOrigin: true,
       pathRewrite: { '^': '' },
-    },
+    },  
   },
   test: {
     '/api/': {
