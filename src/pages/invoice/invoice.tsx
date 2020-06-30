@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Card,Form,Input,DatePicker,Button,Table,Modal} from 'antd';
 import { invoicePage} from '@/services/invoice'
+import moment from "moment";
 import './index.less';
 
 const layout = {
@@ -89,7 +90,9 @@ export default (props:any) => {
     let data={
       page: pageInfo.page,
       limit: pageInfo.limit,
-      search:val.search||''
+      search:val.search||'',
+      startDate:val.startDate?moment(val.startDate).format('YYYY-MM-DD'):'',
+      endDate:val.endDate?moment(val.endDate).format('YYYY-MM-DD'):''
     }
     invoicePage(data).then(res=>{
       setData(React.setKey(res.data.rows))
@@ -114,6 +117,12 @@ export default (props:any) => {
             <Form.Item className="w200" name="search">
               <Input placeholder="收件人电话/地址"></Input>
             </Form.Item>      
+            <Form.Item  name="startDate">
+              <DatePicker placeholder="开始时间"></DatePicker>
+            </Form.Item>
+            <Form.Item name="endDate">
+              <DatePicker placeholder="结束时间"></DatePicker>
+            </Form.Item>
             <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
           </Form>
         </Card>

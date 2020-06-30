@@ -96,6 +96,24 @@ export const menuData=[
               ],
             },
             {
+              name: '任务大厅',
+              icon: 'CarryOutOutlined',
+              path: '/task',
+              component: './task',
+            },
+            {
+              path: '/task/addTask',
+              name: '发布任务',
+              hideInMenu: true,
+              component: './task/addTask',
+            },
+            {
+              path: '/task/detail',
+              name: '任务详情',
+              hideInMenu: true,
+              component: './task/detail',
+            },
+            {
               name: '结算管理',
               icon: 'PropertySafetyOutlined',
               path: '/settlement',
@@ -156,24 +174,7 @@ export const menuData=[
                 },
               ],
             },
-            {
-              name: '任务大厅',
-              icon: 'CarryOutOutlined',
-              path: '/task',
-              component: './task',
-            },
-            {
-              path: '/task/addTask',
-              name: '发布任务',
-              hideInMenu: true,
-              component: './task/addTask',
-            },
-            {
-              path: '/task/detail',
-              name: '任务详情',
-              hideInMenu: true,
-              component: './task/detail',
-            },
+           
             {
               path: '/',
               redirect: '/home',

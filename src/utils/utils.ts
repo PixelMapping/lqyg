@@ -150,7 +150,6 @@ export const getSearchString=(key:string)=>{
   var arr = str.split("&");
   var obj = new Object();
   // 将每一个数组元素以=分隔并赋给obj对象
-  console.log(arr)
   for (var i = 0; i < arr.length; i++) {
       var tmp_arr = arr[i].split("=");
       obj[decodeURIComponent(tmp_arr[0])] = decodeURIComponent(tmp_arr[1]);

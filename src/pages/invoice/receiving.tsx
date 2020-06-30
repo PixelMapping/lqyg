@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Card, Form, Input, DatePicker, Button, Table, Modal, message } from 'antd';
+import { Card, Form, Input, DatePicker, Button, Table, Modal, message ,Popconfirm} from 'antd';
 import { addressPage, addressDefault, addressAdd, addressDelete, addressUpdate } from '@/services/invoice'
 import './index.less';
 
@@ -32,7 +32,9 @@ export default (props: any) => {
       render: (tags: any) => (
         <div>
           <Button type="link" onClick={edit.bind(this, tags)}>编辑</Button>
-          <Button type="link" onClick={del.bind(this, tags.id)}>删除</Button>
+          <Popconfirm title='确定要删除吗？' okText="是" cancelText="否" onConfirm={del.bind(this, tags.id)}>
+            <Button type="link">删除</Button>
+          </Popconfirm>
           {
             tags.useFlag == 1 ? (
               <Button type="link" disabled>默认</Button>
@@ -175,6 +177,5 @@ export default (props: any) => {
         </Form>
       </Modal>
     </div>
-
   );
 };

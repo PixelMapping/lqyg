@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Card,Form,Input,Button,Table ,Select, message } from 'antd';
+import { Card,Form,Input,Button,Table ,Select, message ,DatePicker} from 'antd';
 import { signDetailPage,cancelContract ,smsAlert} from '@/services/sign'
+import moment from "moment";
 const {Option} = Select
 import './index.less';
 
@@ -115,7 +116,9 @@ export default (props:any) => {
       limit:pageInfo.limit,
       userId:'',
       batchNo:val.batchNo||'',
-      search:val.search||''
+      search:val.search||'',
+      sendTime:val.sendTime?moment(val.sendTime).format('YYYY-MM-DD'):'',
+      signTime:val.signTime?moment(val.signTime).format('YYYY-MM-DD'):''
     }
     signDetailPage(data).then(res=>{
       if(res.result){
@@ -170,49 +173,15 @@ export default (props:any) => {
             <Form.Item className="w200" name="search">
               <Input placeholder="姓名/手机号"></Input>
             </Form.Item>   
-            {/* <Form.Item className="w200">
-              <DatePicker className="w200" placeholder="发起时间"></DatePicker>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <Input placeholder="个体/证件号码/手机"></Input>
-            </Form.Item>      
-            <Form.Item className="w200">
-              <Select placeholder="证件类型">
-                <Option value="测试11">测试</Option>
-              </Select>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <Select placeholder="协议模板">
-                <Option value="测试11">测试</Option>
-              </Select>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <Select placeholder="签约状态">
-                <Option value="测试11">测试</Option>
-              </Select>
-            </Form.Item>  */}
-            <Form.Item className="w200">
-              <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
-            </Form.Item> 
-            {/* <Row className="mt16">
-            <Form.Item className="w200">
+            <Form.Item className="w200" name="sendTime">
+              <DatePicker className="w200" placeholder="发起签约时间"></DatePicker>
+            </Form.Item>
+            <Form.Item className="w200" name="signTime">
               <DatePicker className="w200" placeholder="签约时间"></DatePicker>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <DatePicker className="w200" placeholder="生效时间"></DatePicker>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <DatePicker className="w200" placeholder="失效时间"></DatePicker>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <Select placeholder="生效状态">
-                <Option value="测试11">测试</Option>
-              </Select>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <Input placeholder="批次号/协议号"></Input>
-            </Form.Item>  
-            </Row> */}
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
+            </Form.Item>         
           </Form>
         </Card>
         <Card title="签约明细列表">

@@ -105,7 +105,6 @@ export default (props: any) => {
       num.serviceAmount = financial((e * info.serviceCharge)+'')
       num.taxAmount =   financial(((e - num.serviceAmount) * info.taxation)+'')
       num.actualAmount = financial((e - num.taxAmount - num.serviceAmount)+'')
-      console.log(num)
       setTotals(num)
     } else {
       let num = { ...totals }
@@ -121,7 +120,11 @@ export default (props: any) => {
     props.history.push({ pathname: 'record', state: { id: info.channelId } })
   }
 
-
+  const notFound = ()=>{
+    return (
+      '请先添加银行卡'
+    )
+  }
 
   return (
     <div className="assets">
@@ -158,8 +161,8 @@ export default (props: any) => {
               <Form.Item label="充值账户">
                 <p style={{ marginTop: 5 }}>{comInfo.enterpriseName}</p>
               </Form.Item>
-              <Form.Item label="银行账号" name="bankAccount" rules={[{ required: true }]}>
-                <Select className="w250">
+              <Form.Item label="银行账号" name="bankAccount"  rules={[{ required: true }]}>
+                <Select className="w250" notFoundContent={('请先添加银行卡')}>
                   {
                     list.map((item: any) => {
                       return (

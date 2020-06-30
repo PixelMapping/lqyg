@@ -105,7 +105,7 @@ export default (props:any) => {
                   </p>
                   <p>
               <span>任务编号：{item.taskNum}</span>
-              <span>开始时间：{item.releaseTime}</span>
+              <span>报名开始时间：{item.releaseTime}</span>
                   </p>
                 </div>
                 <div className="info">

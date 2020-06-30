@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, DatePicker, Input, Select, Button, Row  ,Table, Card } from 'antd';
 import { recordPage,channelList} from '@/services/asset';
 import { SearchOutlined } from '@ant-design/icons';
+import moment from 'moment'
 const { Option } = Select
 import './index.less';
 
@@ -121,7 +122,6 @@ export default (props:any) => {
 
   const getData=()=>{
     let val = form.getFieldsValue()
-    console.log(val)
     let data={
       page: pageInfo.page,
       limit: pageInfo.limit,
@@ -129,7 +129,10 @@ export default (props:any) => {
       serialNumber:val.serialNumber||'',
       rechargeStatus:val.rechargeStatus||'',
       invoiceStatus:val.invoiceStatus||'',
-      receiveStatus:val.receiveStatus||''
+      receiveStatus:val.receiveStatus||'',
+      startDate:val.startDate?moment(val.startDate).format('YYYY-MM-DD'):'',
+      endDate:val.endDate?moment(val.endDate).format('YYYY-MM-DD'):''
+
     }
     recordPage(data).then(res=>{
       setData(React.setKey(res.data.rows))
@@ -154,11 +157,13 @@ export default (props:any) => {
   return (
     <div className="record">
       <Card title="充值记录查询" className="mb24">
-      <Form layout="inline" form={form}>
+      <Form layout="inline" form={form} 
+              style={{width:1200}}
+              >
         {/* <Form.Item className="w200">
           <DatePicker placeholder="日期" style={{ width: '100%' }} />
         </Form.Item> */}
-         <Form.Item className="w200" name="channelId">
+         <Form.Item className="w200 mb10" name="channelId">
           <Select placeholder="充值通道" allowClear>
             {
               list.map((item:any)=>{
@@ -196,6 +201,12 @@ export default (props:any) => {
             <Option value="1"> 已收票</Option>
             <Option value="2"> 未收票</Option>  
           </Select>
+        </Form.Item>
+        <Form.Item name="startDate">
+            <DatePicker className="w200" placeholder="开始时间"></DatePicker>
+        </Form.Item>
+        <Form.Item name="endDate">
+            <DatePicker className="w200" placeholder="结束时间"></DatePicker>
         </Form.Item>
         <Form.Item className="w200">
           <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>

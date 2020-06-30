@@ -47,11 +47,11 @@ export default (props:any) => {
     // console.log(form.)
     form.validateFields().then(values => {
       let data = { ...values }
-      let fileList = childRef.current.getUpFile()
-      if(fileList.length==0){
-        message.info('请上传附件！')
-        return
-      }
+      let fileList = childRef.current.getUpFile()||[]
+      // if(fileList.length==0){
+      //   message.info('请上传附件！')
+      //   return
+      // }
       data.businessValue = values.taskId[0]
       data.industryValue = values.taskId[1]
       data.provinceId = values.cityId[0]
@@ -97,7 +97,7 @@ export default (props:any) => {
           <Form.Item label="任务描述" name="description" rules={[{ required: true, message: '请输入任务描述' }]}>
             <Input.TextArea placeholder="请输入任务描述"></Input.TextArea>
           </Form.Item>
-          <Form.Item label="* 上传附件" >
+          <Form.Item label="上传附件" >
             <myContext.Provider value={{count:10,type:1}}>
               <ImgUpload cRef={childRef}></ImgUpload>
 

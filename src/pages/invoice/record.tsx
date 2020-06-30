@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, DatePicker, Input, Select, Button, Row, Table, Card, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { recordPage, confirmReceive } from '@/services/invoice'
+import moment from "moment";
 import { channelList} from '@/services/asset';
 const { Option } = Select
 import './index.less';
@@ -89,7 +90,11 @@ export default (props) => {
     let data = {
       page: pageInfo.page,
       limit: pageInfo.limit,
-      channelId: val.channelId||''
+      channelId: val.channelId||'',
+      startDate:val.startDate?moment(val.startDate).format('YYYY-MM-DD'):'',
+      endDate:val.endDate?moment(val.endDate).format('YYYY-MM-DD'):'',
+      invoiceStatus:val.invoiceStatus||'',
+      receiveStatus:val.receiveStatus||''
     }
     recordPage(data).then(res => {
       setData(React.setKey(res.data.rows))
@@ -124,7 +129,7 @@ export default (props) => {
       <Card title="记录查询" className="mb24">
         <Form form={form}>
           <Row>
-            <Form.Item className="w300 mr10" name="channelId">
+            <Form.Item className="w200 mr10" name="channelId">
             <Select placeholder="通道列表">
             {
               list.map((item:any)=>{
@@ -133,6 +138,29 @@ export default (props) => {
                 )
               })
             }
+              </Select>
+            </Form.Item>
+            <Form.Item  name="startDate">
+              <DatePicker className="w200 mr10" placeholder="开始时间"></DatePicker>
+            </Form.Item>
+            <Form.Item name="endDate">
+              <DatePicker className="w200 mr10" placeholder="结束时间"></DatePicker>
+            </Form.Item>
+            <Form.Item className="w200 mr10" name="invoiceStatus">
+              <Select allowClear placeholder="开票状态">
+                <Option value="0">未开票</Option>
+                <Option value="1">审核中</Option>
+                <Option value="2">开票中</Option>
+                <Option value="3">已开票</Option>
+                <Option value="4">已驳回</Option>
+                <Option value="5">已邮寄</Option>
+                <Option value="6">已签收</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item className="w200 mr10" name="receiveStatus">
+              <Select allowClear placeholder="收票状态">
+                <Option value="1">已收票</Option>
+                <Option value="2">未收票</Option>
               </Select>
             </Form.Item>
             {/* <Form.Item className="w200 mr10">
@@ -195,12 +223,7 @@ export default (props) => {
           <Row>
             <Form.Item className="w200 mr10">
               <Input placeholder="开票内容"></Input>
-            </Form.Item>
-            <Form.Item className="w200">
-              <Select placeholder="开票状态">
-                <Option value="测试"> 测试</Option>
-              </Select>
-            </Form.Item>
+            </Form.Item>            
           </Row> */}
         </Form>
       </Card>

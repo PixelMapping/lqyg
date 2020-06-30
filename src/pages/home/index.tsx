@@ -78,7 +78,6 @@ export default () => {
                 </div>
               </div>
             </div>
-
           </Card>
         </Col>
       </Row>

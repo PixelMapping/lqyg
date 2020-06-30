@@ -247,7 +247,7 @@ export default (props: any) => {
                 </div>
                 <div className="number">
                   <p>已发放</p>
-                  <p className="weight">{numObj.grantAmount}</p>
+                  <p className="weight">￥{numObj.grantAmount}</p>
                 </div>
               </Col>
             </Row>
@@ -262,7 +262,7 @@ export default (props: any) => {
                 <p className="lt">{info.name} </p>
                 <p>
                   <span>任务编号：{info.taskNum}</span>
-                  <span>发布时间：{info.releaseTime}</span>
+                  <span>报名开始时间：{info.releaseTime}</span>
                 </p>
               </div>
               <div className="info">

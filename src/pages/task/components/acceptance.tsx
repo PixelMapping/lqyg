@@ -153,7 +153,6 @@ export default () => {
         alt: item
       }
     })
-    console.log(obj)
     setUrls(obj)
 
     setVisible(true)

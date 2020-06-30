@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { history, Reducer, Effect } from 'umi';
 
-import { fakeAccountLogin,bind } from '@/services/login';
+import { fakeAccountLogin,bind ,removeWeChat} from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
@@ -17,6 +17,7 @@ export interface LoginModelType {
   effects: {
     login: Effect;
     logout: Effect;
+    remover:Effect;
   };
   reducers: {
     changeLoginStatus: Reducer<StateType>;
@@ -57,6 +58,18 @@ const Model: LoginModelType = {
         });
       }
     },
+    *remover( { payload }, { call, put }) {
+      let user = JSON.parse(localStorage.getItem('userInfo')) 
+      const response = yield call(removeWeChat, {userId:user.id})
+      if(response.result){
+        localStorage.removeItem('token')
+        localStorage.removeItem('userInfo')
+        history.replace({
+          pathname: '/user/login',          
+        });
+      }
+      // Note: There may be security issues, please note
+    }
   },
 
   reducers: {

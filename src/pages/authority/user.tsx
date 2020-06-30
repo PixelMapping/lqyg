@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Card, Form, Input, Button, Table, Modal, Select, message } from 'antd';
+import { Card, Form, Input, Button, Table, Modal, Select, message ,Popconfirm} from 'antd';
 const { Option } = Select
 import { userList, addSubUser, getRoleList, forbidLogin, disableUser } from '@/services/auth'
 
@@ -46,7 +46,9 @@ export default (props: any) => {
                 <Button type="link" onClick={forbid.bind(this, tags, 0)}>启用登陆</Button>
               )
           }
-          <Button type="link" onClick={disable.bind(this, tags)}>禁用</Button>
+          <Popconfirm placement="top" title='确定要禁用吗？' onConfirm={disable.bind(this, tags)} okText="是" cancelText="否">
+            <Button type="link" >禁用</Button>
+          </Popconfirm>
         </div>
       )
     },
@@ -147,6 +149,7 @@ export default (props: any) => {
         } else {
           message.info('启用登陆成功')
         }
+        getData()
       }
     })
   }
@@ -166,7 +169,7 @@ export default (props: any) => {
       <Card title="用户管理查询" className="mb24">
         <Form layout="inline" form={form}>
           <Form.Item className="w200" name="name">
-            <Input placeholder="编号/姓名"></Input>
+            <Input placeholder="姓名"></Input>
           </Form.Item>
           <Form.Item className="w200" name="phone">
             <Input placeholder="登陆手机号"></Input>
@@ -184,8 +187,8 @@ export default (props: any) => {
           </Form.Item>
           <Form.Item className="w200" name="loginFlag">
             <Select placeholder="是否禁止登录" allowClear>
-              <Option value="是">是</Option>
-              <Option value="否">否</Option>
+              <Option value="1">是</Option>
+              <Option value="0">否</Option>
             </Select>
           </Form.Item>
           <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>

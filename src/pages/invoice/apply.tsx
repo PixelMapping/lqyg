@@ -21,6 +21,7 @@ export default (props: any) => {
   const [visible, setVisible] = useState(false)
   const [total, setTotal] = useState(0)
   const [form] = Form.useForm()
+  const [searFrom] = Form.useForm()
   const [pageInfo, setPage] = useState({ page: 1, limit: 20, total: 0 })
   const columns = [
     {
@@ -88,10 +89,13 @@ export default (props: any) => {
     })
   }
   const getData = () => {
+    let val = searFrom.getFieldsValue()
     let data = {
       page: pageInfo.page,
       limit: pageInfo.limit,
-      channelId: curren == '1'?'':curren
+      channelId: curren == '1'?'':curren,
+      startDate:val.startDate?moment(val.startDate).format('YYYY-MM-DD'):'',
+      endDate:val.endDate?moment(val.endDate).format('YYYY-MM-DD'):''
     }
     unbilledPage(data).then(res => {
       let rows=res.data.rows.map(item=>{
@@ -140,8 +144,7 @@ export default (props: any) => {
     let arr = list.filter(item=>item.channelId==val)
     if(arr.length>0){
       setCurName(arr[0].name)
-    }
-    
+    }    
   }
 
   const Apply = ()=>{
@@ -182,16 +185,31 @@ export default (props: any) => {
         </p>
       </Card>
       <Card title="申请发票" className="mb24">
-        <Radio.Group value={curren} onChange={handRadio} buttonStyle="solid">
-          <Radio.Button value="1">全部</Radio.Button>
-          {
-            list.map((item: any) => {
-              return (
-                <Radio.Button value={item.channelId} key={item.channelId}>{item.name}</Radio.Button>
-              )
-            })
-          }
-        </Radio.Group>
+     
+        <Form layout="inline" form={searFrom}>
+        
+          <Form.Item>
+            <Radio.Group value={curren} onChange={handRadio} buttonStyle="solid">
+              <Radio.Button value="1">全部</Radio.Button>
+              {
+                list.map((item: any) => {
+                  return (
+                    <Radio.Button value={item.channelId} key={item.channelId}>{item.name}</Radio.Button>
+                  )
+                })
+              }
+            </Radio.Group>
+          </Form.Item>       
+          <Form.Item name="startDate">
+            <DatePicker placeholder="开始时间"></DatePicker>
+          </Form.Item>
+          <Form.Item name="endDate">
+            <DatePicker placeholder="结束时间"></DatePicker>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" onClick={getData}>搜索</Button>
+          </Form.Item>
+        </Form>
         <Table
           rowSelection={{
             ...rowSelection,
@@ -296,7 +314,7 @@ export default (props: any) => {
           <Row>
             <Col span="12">
               <Form.Item label="收件地址" name="address" rules={[{ required: true }]}>
-                <Select placeholder="请选择" onChange={selectAddress}>
+                <Select placeholder="请选择" notFoundContent={('请先添加收件地址')} onChange={selectAddress}>
                   {
                     formList.addressList.map((item:any,index:number)=>{
                       return (

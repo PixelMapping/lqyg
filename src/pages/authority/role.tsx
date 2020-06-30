@@ -54,6 +54,7 @@ export default (props: any) => {
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [expandedKeys, setExpandedKeys] = useState(['78']);
   const [checkedKeys, setCheckedKeys] = useState([]);
+  const [halfKeys,setHalfKeys] = useState([])
 
   useEffect(() => {
     getData()
@@ -73,10 +74,7 @@ export default (props: any) => {
         })
       
         let data = toTree(arr)
-        console.log(data)
-        setTree(data)
-        
-
+        setTree(data)        
       }
 
     })
@@ -107,7 +105,7 @@ export default (props: any) => {
 
   const getData = () => {
     let val = form.getFieldsValue()
-    let enterpriseId = JSON.parse(localStorage.getItem('comInfo')).enterpriseId
+    let enterpriseId = JSON.parse(localStorage.getItem('userInfo')).enterpriseId
     let data = {
       page: pageInfo.page,
       limit: pageInfo.limit,
@@ -138,7 +136,7 @@ export default (props: any) => {
 
 
   const confirm = () => {
-    let enterpriseId = JSON.parse(localStorage.getItem('comInfo')).enterpriseId
+    let enterpriseId = JSON.parse(localStorage.getItem('userInfo')).enterpriseId
     modalForm.validateFields().then(val => {
       let data = {
         describe: val.describe,
@@ -191,14 +189,16 @@ export default (props: any) => {
     })
   }
 
-  const onCheck = (checkedKeys:any) => {
+  const onCheck = (checkedKeys:any,checkedNodes:any) => {
+    setHalfKeys(checkedNodes.halfCheckedKeys)
     setCheckedKeys(checkedKeys)
   };
 
   const submit=()=>{
+    let arr = [...checkedKeys,...halfKeys]
     saveRoleMenut({
         roleId:cur.id,
-        menuIds:checkedKeys.join(',')
+        menuIds:arr.join(',')
       }).then(res=>{
         if(res.result){
           message.info('授权成功！')

@@ -17,7 +17,6 @@ export interface GlobalHeaderRightProps extends Partial<ConnectProps> {
 class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
   onMenuClick = (event: ClickParam) => {
     const { key } = event;
-
     if (key === 'logout') {
       const { dispatch } = this.props;
 
@@ -30,7 +29,19 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
       return;
     }
 
-    history.push(`/account/${key}`);
+    if(key === 'remove'){
+      const { dispatch } = this.props;
+
+      if (dispatch) {
+        dispatch({
+          type: 'login/remover',
+        });
+      }
+
+      return;
+    }
+
+    // history.push(`/account/${key}`);
   };
 
   render(): React.ReactNode {
@@ -64,9 +75,13 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
         <Menu.Item key="logout">
           退出登录
         </Menu.Item>
-        <Menu.Item key="remove">
-          解除微信绑定
-        </Menu.Item>
+        {
+          (user.openId!=''&&user.openId)&&(
+            <Menu.Item key="remove">
+              解除微信绑定
+            </Menu.Item>
+          )
+        }        
       </Menu>
     );
     return currentUser && currentUser.name ? (
