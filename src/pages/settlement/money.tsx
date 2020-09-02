@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './index.less';
 import { Card, Steps, Form, Table, Select, Upload, message, Button, Radio, Row, Col } from 'antd'
 import { UploadOutlined, CheckCircleFilled } from '@ant-design/icons';
-import { enterpriseChannels, batchPaymentSumit, checkSetleTaskInfo, taskList, confirmPpayment } from '@/services/settlement'
-import { setDefault } from '@/services/asset';
+import { enterpriseChannels, batchPaymentSumit, checkSetleTaskInfo, taskList, confirmPpayment,countImport } from '@/services/settlement'
 const { Option } = Select
 const { Step } = Steps;
 
@@ -111,7 +110,8 @@ export default (props: any) => {
     beforeUpload: (file: any) => {
       let obj = {
         channelId: formData.channelId,
-        settlementMethod: formData.settlementMethod
+        settlementMethod: formData.settlementMethod,
+        batchId:subInfo.batchId
       }
       setCur(1)
       message.info('添加成功！')
@@ -160,7 +160,7 @@ export default (props: any) => {
   }
 
   const getCheck = () => {
-    checkSetleTaskInfo({ batchId: subInfo.batchId, showLoading: true }).then(res => {
+    countImport({ batchId: subInfo.batchId, showLoading: true }).then(res => {
       if (res.result) {
         setTotals(res.data)
         setIsSub('b')
@@ -284,16 +284,16 @@ export default (props: any) => {
       {
         (cur == 1 || cur == 4) && (
           <div>
-            <p className="describe">当前表格合计{totals.waitCheck}条  可发起打款{totals.passCheck}条</p>
+            <p className="describe">当前表格合计{totals.success+totals.fail}条  可发起打款{totals.success}条</p>
             <Card className="mb24">
               <div className="info">
                 <div className="lt">
                   <p>通过验证（条）</p>
-                  <p className="num">{totals.passCheck}</p>
+                  <p className="num">{totals.success}</p>
                 </div>
                 <div className="rt">
                   <p>未通过（条）</p>
-                  <p className="num">{totals.failedPassCheck}</p>
+                  <p className="num">{totals.fail}</p>
                 </div>
               </div>
             </Card>
@@ -321,6 +321,7 @@ export default (props: any) => {
                   total: pageInfo.total,
                   onChange: changePage
                 }}
+                className="mt10"
                 columns={columns}
                 dataSource={data}
               ></Table>

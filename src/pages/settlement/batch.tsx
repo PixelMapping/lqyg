@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, DatePicker, Input, Select, Button, Row, Table, Card } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined ,FileSearchOutlined ,FileTextOutlined} from '@ant-design/icons';
 import moment from 'moment'
 import { bathList } from '@/services/settlement'
 const { Option } = Select
@@ -52,14 +52,14 @@ export default (props:any) => {
       title: '打款金额',
       dataIndex: 'settleAmount',
       key: "settleAmount",
-    },
+    },    
     {
       title: '操作',
       key: 'action',
       render: (tags: any) => (
         <div>
-          <Button type="link" onClick={toDetail.bind(this, tags)}>打款详情</Button>
-          <Button type="link" onClick={toDetailTable.bind(this, tags)}>打款明细</Button>
+          <Button type="link" icon={<FileSearchOutlined />} onClick={toDetail.bind(this, tags)}>打款详情</Button>
+          <Button type="link"  icon={<FileTextOutlined />} onClick={toDetailTable.bind(this, tags)}>打款明细</Button>
         </div>
 
       )
@@ -126,7 +126,7 @@ export default (props:any) => {
             </Select>
           </Form.Item>
           <Form.Item className="w200" name="settleAmount">
-            <Input placeholder="打款金额"></Input>
+            <Input maxLength={8} placeholder="打款金额"></Input>
           </Form.Item>
           <Form.Item className="w200" name="submitTime">
             <DatePicker placeholder="发起日期" style={{ width: '100%' }} />

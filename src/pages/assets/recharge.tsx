@@ -53,7 +53,7 @@ export default (props: any) => {
     })
     setUrls(url)
     form.validateFields().then(values => {
-      let asset = list.filter(item => item.bankId == values.bankAccount)[0]
+      let asset = list.filter((item:any) => item.bankId == values.bankAccount)[0]
       let data = {
         enterpriseChannelId: info.enterpriseChannelId,
         channelName: info.name,
@@ -120,10 +120,10 @@ export default (props: any) => {
     props.history.push({ pathname: 'record', state: { id: info.channelId } })
   }
 
-  const notFound = ()=>{
-    return (
-      '请先添加银行卡'
-    )
+  const node= ()=>{
+    return <div className="num">
+      （{(changeMoneyToChinese(totals.amount))}）
+    </div>
   }
 
   return (
@@ -177,7 +177,6 @@ export default (props: any) => {
                   <InputNumber min={0} max={9000000000} className="w250" onChange={changeAmount} placeholder="请输入充值金额"></InputNumber>
                 </Form.Item>
                 <div className="num">
-
                   （{(changeMoneyToChinese(totals.amount))}）
                 </div>
               </div>
@@ -190,7 +189,7 @@ export default (props: any) => {
                 </div>
               </Form.Item>
               <Form.Item label="流水号" name="serialNumber" rules={[{ required: true }]}>
-                <Input className="w250" placeholder="请输入流水号"></Input>
+                <Input className="w250" maxLength={30} placeholder="请输入流水号"></Input>
               </Form.Item>
               <Form.Item label="* 充值凭证">
                 <myContext.Provider value={{count:1,type:2}}>

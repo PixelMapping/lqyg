@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, DatePicker, Input, Select, Button, Row, Table, Card } from 'antd';
+import { Form, Input, Select, Button, Row, Table, Card } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import {enterpriseChannels,taskList} from '@/services/settlement'
 const { Option } = Select
@@ -9,7 +9,6 @@ import './index.less';
 export default (props:any) => {
   const [channelList,setList] = useState([]) 
   const [data, setData] = useState([])
-  const [selectedRowKeys, setKeys] = useState([])
   const [pageInfo, setPage] = useState({ page: 1, limit: 20, total: 0 })
   const [form] = Form.useForm()
   const columns = [
@@ -52,11 +51,6 @@ export default (props:any) => {
       dataIndex: 'reason',
       key: "reason",
     },
-    // {
-    //   title: '证件类型',
-    //   dataIndex: '',
-    //   key: "",
-    // },   
     {
       title: '证件号码',
       dataIndex: 'idcard',
@@ -67,11 +61,6 @@ export default (props:any) => {
       dataIndex: 'channelName',
       key: "channelName",
     },
-    // {
-    //   title: '结算方式',
-    //   dataIndex: 'name',
-    //   key: "",
-    // },
 
   ];
 
@@ -130,17 +119,17 @@ export default (props:any) => {
     <div className="record">
       <Card title="批次查询" className="mb24">
         <Form layout="inline" form={form}>
-          <Form.Item className="w200" name="status">
+          <Form.Item className="w150 mb10" name="status">
           <Select placeholder="打款状态" allowClear>
               <Option value="1"> 打款完成</Option>
               <Option value="2"> 打款审核中</Option>
               <Option value="3"> 打款失败</Option>
             </Select>
           </Form.Item>
-          <Form.Item className="w200" name="taskInfo">
-            <Input placeholder="任务名称"></Input>
+          <Form.Item className="w150" name="taskInfo">
+            <Input maxLength={10} placeholder="任务名称"></Input>
           </Form.Item>
-          <Form.Item className="w200" name="channelId">
+          <Form.Item className="w150" name="channelId">
             <Select placeholder="打款通道" allowClear>
               {
                 channelList.map((item:any)=>{
@@ -152,12 +141,12 @@ export default (props:any) => {
             </Select>
           </Form.Item>
           <Form.Item className="w200" name="userName">
-            <Input placeholder="收款人/手机号/证件号码"></Input>
+            <Input maxLength={20} placeholder="收款人/手机号/证件号码"></Input>
           </Form.Item>
           <Form.Item className="w200" name="batchNo">
-          <Input placeholder="打款批次号"></Input>
+          <Input maxLength={20} placeholder="打款批次号"></Input>
           </Form.Item>
-          <Form.Item className="w200">
+          <Form.Item>
             <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
           </Form.Item>
           {/* <Row className="mt16">

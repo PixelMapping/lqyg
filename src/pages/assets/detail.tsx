@@ -58,7 +58,7 @@ export default (props: any) => {
             {info.rechargeStatus == 3 && (<span>充值失败</span>)}
           </span></Col>
           <Col span="12"><span>收票状态</span> <span style={{ color: '#FAAD14' }}>
-            {info.receiveStatus == 1 && (<span>已开票</span>)}
+            {info.receiveStatus == 1 && (<span>已收票</span>)}
             {info.receiveStatus == 2 && (<span>未收票</span>)}
           </span></Col>
         </Row>

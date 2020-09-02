@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Form, DatePicker, Input, Select, Button, Row  ,Table, Card } from 'antd';
 import { recordPage,channelList} from '@/services/asset';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined,InfoCircleOutlined } from '@ant-design/icons';
 import moment from 'moment'
 const { Option } = Select
 import './index.less';
-
 
 export default (props:any) => {
 
@@ -89,7 +88,7 @@ export default (props:any) => {
       title:'操作',
       key:'action',
       render:(tags:any)=>(
-        <Button type="link" onClick={toDetail.bind(this,tags.rechargeId)}>详情</Button>
+        <Button type="link" icon={<InfoCircleOutlined />} onClick={toDetail.bind(this,tags.rechargeId)}>详情</Button>
         // <div onClick={toDetail.bind(this,tags.rechargeId)}>详情</div>
       )
     }
@@ -176,7 +175,7 @@ export default (props:any) => {
           </Select>
         </Form.Item>
         <Form.Item className="w200" name="serialNumber">
-          <Input placeholder="流水号"></Input>
+          <Input maxLength={30} placeholder="流水号"></Input>
         </Form.Item>
         <Form.Item className="w200" name="rechargeStatus">
           <Select placeholder="充值状态" allowClear>

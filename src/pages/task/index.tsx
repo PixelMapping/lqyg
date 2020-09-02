@@ -76,7 +76,7 @@ export default (props:any) => {
             </Select>
           </Form.Item>
           <Form.Item name="search" className="w200">
-            <Input placeholder="请输入任务名称"></Input>
+            <Input maxLength={20} placeholder="请输入任务名称"></Input>
           </Form.Item>
           <Form.Item name="beginTime" className="w200">
             <DatePicker placeholder="开始时间" className="wall"></DatePicker>

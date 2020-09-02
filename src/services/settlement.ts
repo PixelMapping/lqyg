@@ -41,6 +41,14 @@ export async function taskList(params: any) {
   });
 }
 
+//明细列表
+export async function taskDetailList(params: any) {
+  return request('/client/enterprise/bath/taskDetailList.do', {
+    method: 'GET',
+    params: params,
+  });
+}
+
 //批量结算
 export async function batchPaymentSumit(params: any,headers={}) {
   return request('/client/enterprise/batchPaymentSumit.do', {
@@ -56,6 +64,14 @@ export async function checkSetleTaskInfo(params: any,headers={}) {
     method: 'GET',
     params: params,
     headers:headers
+  });
+}
+
+//审核结算导入
+export async function countImport(params: any,headers={}) {
+  return request('/client/enterprise/countImport.do', {
+    method: 'GET',
+    params: params,
   });
 }
 

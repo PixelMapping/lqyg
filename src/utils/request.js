@@ -2,30 +2,30 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { history} from 'umi';
+import { history } from 'umi';
 import { extend } from 'umi-request';
-import { notification ,message, Spin } from 'antd';
+import { notification, message, Spin } from 'antd';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // 当前正在请求的数量
 let requestCount = 0
 
 // 显示loading
-function showLoading () {
-        var dom = document.createElement('div')
-        dom.setAttribute('id', 'loading')
-        document.body.appendChild(dom)
-        ReactDOM.render(<Spin tip="加载中..." size="large"/>, dom)
+function showLoading() {
+  var dom = document.createElement('div')
+  dom.setAttribute('id', 'loading')
+  document.body.appendChild(dom)
+  ReactDOM.render(<Spin tip="加载中..." size="large" />, dom)
 }
 
 // 隐藏loading
-function hideLoading () {
+function hideLoading() {
   setTimeout(() => {
-    if(document.getElementById('loading')){
+    if (document.getElementById('loading')) {
       document.body.removeChild(document.getElementById('loading'))
     }
-  },1000);
-    
+  }, 1000);
+
 }
 
 
@@ -51,7 +51,7 @@ const codeMessage = {
  * 异常处理程序
  */
 
-const errorHandler = ( error ) => {
+const errorHandler = (error) => {
 
   const { response } = error;
   if (response && response.status) {
@@ -72,7 +72,6 @@ const errorHandler = ( error ) => {
 };
 
 
-
 /**
  * 配置request请求时的默认参数
  */
@@ -82,44 +81,43 @@ const request = extend({
   errorHandler, // 默认错误处理
 
   credentials: 'include', // 默认请求是否带上cookie
-  headers:{
-    'Authorization':token||'',
-    'User-Client':'client'
+  headers: {
+    'Authorization': token || '',
+    'User-Client': 'client'
   }
 });
 
 
 // request拦截器, 改变url 或 options.
 request.interceptors.request.use(async (url, options) => {
-  let data=options.data||options.params
- if(data.showLoading){
-      showLoading()
+  let data = options.data || options.params
+  if (data.showLoading) {
+    showLoading()
   }
-    return (
-      {
-        url: url,
-        options: { ...options },
-      }
-    );
+  return (
+    {
+      url: url,
+      options: { ...options },
+    }
+  );
 
 })
 
 
 //对请求全局处理
-request.interceptors.response.use(async(response) => {
+request.interceptors.response.use(async (response) => {
   const data = await response.clone().json();
-  if(data){
+  if (data) {
     hideLoading()
-    if(data.result){     
+    if (data.result) {
       return data
-    }else if(data.status==50103){
+    } else if (data.status == 50103) {
       localStorage.removeItem('token')
       localStorage.removeItem('userInfo')
       history.replace({
-        pathname: '/user/login',          
+        pathname: '/user/login',
       });
-    }else if(!data.result){
-      
+    } else if (!data.result) {
       message.info(data.message)
       return data
     }

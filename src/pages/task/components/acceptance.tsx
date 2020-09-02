@@ -162,7 +162,7 @@ export default () => {
     <div>
       <Card title="任务信息" className="mb24">
         <Form layout="inline" form={form} onFinish={getData}>
-          <Form.Item className="w200" name="search">
+          <Form.Item className="w200 mb10" name="search">
             <Input placeholder="姓名/手机号/证件号码"></Input>
           </Form.Item>
           <Form.Item className="w200" name="enrollType">

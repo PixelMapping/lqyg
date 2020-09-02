@@ -91,7 +91,7 @@ export default (props: any) => {
     setInfo(obj)
 
     showTask({ taskId: id, showLoading: true }).then(res => {
-
+      getData(obj.id)
     })
   }
 

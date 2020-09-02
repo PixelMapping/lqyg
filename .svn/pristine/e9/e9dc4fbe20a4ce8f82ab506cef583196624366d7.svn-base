@@ -1,3 +1,0 @@
-
-export { connect, useDispatch, useStore, useSelector } from 'F:/lqyg/node_modules/dva';
-export { getApp as getDvaApp } from './dva';

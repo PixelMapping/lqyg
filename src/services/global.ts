@@ -24,3 +24,12 @@ export async function actions(params: any) {
     params: params,
   });
 }
+
+
+//通道列表
+export async function invoiceChannelList(params: any) {
+  return request('/client/enterChannel/invoiceChannelList.do', {
+    method: 'GET',
+    params: params,
+  });
+}

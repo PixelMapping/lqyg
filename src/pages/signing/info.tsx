@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Card,Form,Input,DatePicker,Button,Table,Modal ,Row ,Select, message,Col} from 'antd';
+import { SearchOutlined ,InfoCircleOutlined ,StopOutlined ,FileOutlined ,createFromIconfontCN} from '@ant-design/icons';
+import {iconUrl} from '@/utils/utils'
+const MyIcon = createFromIconfontCN({
+  scriptUrl: iconUrl, // 在 iconfont.cn 上生成
+});
+import { Card,Form,Input,Button,Table,Modal ,Row ,Select, message,Col} from 'antd';
 import {signUserPage,sendSignList,sendOneSign,cancelSignList,cancelContract,setBlacklist} from '@/services/sign'
 const {Option} = Select
 import './index.less';
@@ -43,18 +47,18 @@ export default (props:any) => {
       key:'',
       render:(tags:any)=>(
         <div>
-          <Button type="link" onClick={toDetail.bind(this,tags.userId)}>查看</Button>
+          <Button type="link" icon={<InfoCircleOutlined />} onClick={toDetail.bind(this,tags.userId)}>查看详情</Button>
           {/* <Button type="link">编辑手机号</Button> */}
           {
             tags.isBlacklist==0 ? (
-              <Button type="link" onClick={changeBlack.bind(this,1,tags.userId)}>禁止签约</Button>
+              <Button type="link" icon={<StopOutlined />} onClick={changeBlack.bind(this,1,tags.userId)}>禁止签约</Button>
             ):(
-              <Button type="link" onClick={changeBlack.bind(this,0,tags.userId)}>恢复签约</Button>
+              <Button type="link" icon={<MyIcon type="icon-liuchenghuifu" />} onClick={changeBlack.bind(this,0,tags.userId)}>恢复签约</Button>
             )
           }
           {
             tags.isBlacklist==0 &&(
-              <Button type="link" onClick={setModal.bind(this,1,tags.userId)}>发起签约</Button>
+              <Button type="link" icon={<FileOutlined />} onClick={setModal.bind(this,1,tags.userId)}>发起签约</Button>
             )
           }
         </div>
@@ -161,13 +165,13 @@ export default (props:any) => {
         <Card title="个人信息查询" className="mb24">
           <Form layout="inline" className="w1200" form={form}>
             <Form.Item className="w200" name="name">
-              <Input placeholder="姓名"></Input>
+              <Input maxLength={10} placeholder="姓名"></Input>
             </Form.Item>      
             <Form.Item className="w200" name="phone">
-              <Input placeholder="手机号"></Input>
+              <Input maxLength={11} placeholder="手机号"></Input>
             </Form.Item> 
             <Form.Item className="w200" name="idcard">
-              <Input placeholder="证件号码"></Input>
+              <Input maxLength={20} placeholder="证件号码"></Input>
             </Form.Item>             
             <Form.Item className="w200" name="authentFlag">
               <Select placeholder="证件类型">
@@ -175,12 +179,6 @@ export default (props:any) => {
                 <Option value="2">个体工商户</Option>
               </Select>
             </Form.Item> 
-            {/* <Form.Item className="w200">
-              <Input placeholder="是否个体商户"></Input>
-            </Form.Item> 
-            <Form.Item className="w200">
-              <DatePicker className="w200" placeholder="添加时间"></DatePicker>
-            </Form.Item>  */}
             <Form.Item className="w200">
               <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
             </Form.Item> 

@@ -156,3 +156,5 @@ export const getSearchString=(key:string)=>{
   }
   return obj[key];
 }
+
+export const iconUrl = '//at.alicdn.com/t/font_1939554_7kn4ic5v2k.js' 

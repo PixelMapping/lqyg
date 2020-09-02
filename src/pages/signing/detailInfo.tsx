@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined ,InfoCircleOutlined ,ImportOutlined ,MailOutlined} from '@ant-design/icons';
 import { Card,Form,Input,Button,Table ,Select, message ,DatePicker} from 'antd';
 import { signDetailPage,cancelContract ,smsAlert} from '@/services/sign'
 import moment from "moment";
@@ -81,16 +81,16 @@ export default (props:any) => {
       key:'',
       render:(tags:any)=>(
         <div>
-          <Button type="link" onClick={toDetail.bind(this,tags)}>详情</Button>
+          <Button type="link" icon={<InfoCircleOutlined />} onClick={toDetail.bind(this,tags)}>查看详情</Button>
           {
             tags.effectStatus==0 &&(
-              <Button type="link" onClick={recall.bind(this,tags.signId)}>撤回合约</Button>
+              <Button type="link" icon={<ImportOutlined />} onClick={recall.bind(this,tags.signId)}>撤回合约</Button>
             )
 
           }
           {
             tags.signStatus==0&&(
-          <Button type="link" onClick={remind.bind(this,tags.signId)}>短信提醒</Button>
+          <Button type="link" icon={<MailOutlined />} onClick={remind.bind(this,tags.signId)}>短信提醒</Button>
 
             )
           }
@@ -135,11 +135,9 @@ export default (props:any) => {
     setPage(pageInfo)
     getData()
   }
-
-
   
   const toDetail = (tag:any)=>{
-    props.history.push({pathname:'detail',state:{id:tag.userId}})
+    props.history.push({pathname:'detail',state:{id:tag.userId, batchNo: tag.batchNo}})
   }
 
   const recall = (id:string)=>{
@@ -162,16 +160,15 @@ export default (props:any) => {
       }
     })
   }
-
   return (
     <div >
         <Card title="签约明细查询" className="mb24">
           <Form layout="inline" className="w1300" form={form}>
           <Form.Item className="w200" name="batchNo">
-              <Input placeholder="批次号"></Input>
+              <Input maxLength={20} placeholder="批次号"></Input>
             </Form.Item>   
             <Form.Item className="w200" name="search">
-              <Input placeholder="姓名/手机号"></Input>
+              <Input maxLength={11} placeholder="姓名/手机号"></Input>
             </Form.Item>   
             <Form.Item className="w200" name="sendTime">
               <DatePicker className="w200" placeholder="发起签约时间"></DatePicker>
@@ -186,16 +183,14 @@ export default (props:any) => {
         </Card>
         <Card title="签约明细列表">
           <Table 
+          scroll={{x:'max-content'}}
           pagination={{
             pageSize: pageInfo.limit,
             total: pageInfo.total,
             onChange: changePage
           }}
             columns={columns} dataSource={data} ></Table>
-        </Card>
-
-        
+        </Card>        
     </div>
-
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined ,FileTextOutlined} from '@ant-design/icons';
 import { Card, Form, Input, DatePicker, Button, Table, Modal, Select } from 'antd';
 const { Option } = Select
 import moment from 'moment'
@@ -49,7 +49,7 @@ export default (props: any) => {
       key: '',
       render: (tags: any) => (
         <div>
-          <Button type="link" onClick={toDetail.bind(this, tags.batchNo)}>签约明细</Button>
+          <Button type="link" icon={<FileTextOutlined />} onClick={toDetail.bind(this, tags.batchNo)}>签约明细</Button>
         </div>
       )
     },
@@ -118,7 +118,7 @@ export default (props: any) => {
         <Form layout="inline" className="w1200" form={form}>
 
           <Form.Item className="w200" name="batchNo">
-            <Input placeholder="批次号"></Input>
+            <Input maxLength={20} placeholder="批次号"></Input>
           </Form.Item>
           <Form.Item className="w200" name="crtTime">
             <DatePicker className="w200" placeholder="签约发起时间"></DatePicker>
@@ -128,7 +128,7 @@ export default (props: any) => {
               {
                 list.map((item: any) => {
                   return (
-                    <Option vlaue={item.value} key={item.value}>{item.label}</Option>
+                    <Option value={item.value} key={item.value}>{item.label}</Option>
                   )
                 })
               }
@@ -137,7 +137,6 @@ export default (props: any) => {
           <Form.Item className="w200" >
             <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
           </Form.Item>
-
         </Form>
       </Card>
       <Card title="个体列表" className="batch-card" extra={<Button onClick={importData}>导入并批量签约</Button>}>

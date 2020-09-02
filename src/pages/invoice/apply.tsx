@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Table, Radio, Button, Modal, Form, Input, Select, DatePicker, Row, Col,message } from 'antd';
 import { unbilledPage,applyData,applyInvoice } from '@/services/invoice'
-import { channelList } from '@/services/asset'
+import {InfoCircleOutlined} from '@ant-design/icons';
+import { invoiceChannelList } from '@/services/global'
 import moment from "moment";
 const { Option } = Select
 import './index.less';
-import { getMenuData } from '@ant-design/pro-layout';
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -59,7 +59,7 @@ export default (props: any) => {
       title: '操作',
       key: 'action',
       render: (tags: any) => (
-        <Button type="link" onClick={toDetail.bind(this, tags.rechargeId)}>查看详情</Button>
+        <Button type="link" icon={<InfoCircleOutlined />} onClick={toDetail.bind(this, tags.rechargeId)}>查看详情</Button>
       )
     },
   ];
@@ -71,7 +71,7 @@ export default (props: any) => {
 
   }, [curren]);
   const getList = () => {
-    channelList({}).then(res => {
+    invoiceChannelList({}).then(res => {
       setList(res.data)
     })
 
@@ -98,7 +98,7 @@ export default (props: any) => {
       endDate:val.endDate?moment(val.endDate).format('YYYY-MM-DD'):''
     }
     unbilledPage(data).then(res => {
-      let rows=res.data.rows.map(item=>{
+      let rows=res.data.rows.map((item:any)=>{
         return {...item,key:item.rechargeId}
       })
       setData(rows)

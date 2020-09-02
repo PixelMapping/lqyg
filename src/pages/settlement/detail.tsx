@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Table, Select } from 'antd';
 const { Option } = Select
-import { enBatchPaymentInfo, taskList } from '@/services/settlement'
+import { enBatchPaymentInfo, taskDetailList } from '@/services/settlement'
 import Zmage from 'react-zmage'
 import './index.less';
 
@@ -50,7 +50,7 @@ const columns = [
 ]
 
 export default (props: any) => {
-  const [id, setId] = useState()
+  const [id, setId] = useState('')
   const [info, setInfo] = useState<any>({})
   const [data, setData] = useState([])
   const [pageInfo, setPage] = useState({ page: 1, limit: 20, total: 0 })
@@ -66,7 +66,7 @@ export default (props: any) => {
 
 
   const getData = (id: string) => {
-    taskList({ page: pageInfo.page, limit: pageInfo.limit, batchId: id }).then(res => {
+    taskDetailList({ page: pageInfo.page, limit: pageInfo.limit, batchId: id }).then(res => {
       if (res.result) {
         setData(res.data.rows)
         let obj = { ...pageInfo }
@@ -79,7 +79,7 @@ export default (props: any) => {
   const changePage = (current: number) => {
     pageInfo.page = current
     setPage(pageInfo)
-    getData()
+    getData(id)
   }
 
   const getInfo = (id: string) => {

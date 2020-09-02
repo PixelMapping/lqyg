@@ -15,7 +15,7 @@ export default (props:any) => {
       title:'实际开票日期',
       dataIndex:'billingTime',
       key:'billingTime',
-      width:150
+      width:200
     },
     {
       title:'开票金额',
@@ -48,7 +48,7 @@ export default (props:any) => {
       title:'税号',
       dataIndex:'taxNumber',
       key:'taxNumber',
-      width:200
+      width:150
     },  
     {
       title:'银行账号',
@@ -66,7 +66,7 @@ export default (props:any) => {
       title:'单位地址',
       dataIndex:'unitAddress',
       key:'unitAddress',
-      width:200
+      width:250
     },  
     {
       title:'单位电话',
@@ -115,7 +115,7 @@ export default (props:any) => {
         <Card title="记录查询" className="mb24">
           <Form layout="inline" form={form}>
             <Form.Item className="w200" name="search">
-              <Input placeholder="收件人电话/地址"></Input>
+              <Input maxLength={20} placeholder="收件人电话/地址"></Input>
             </Form.Item>      
             <Form.Item  name="startDate">
               <DatePicker placeholder="开始时间"></DatePicker>
@@ -128,6 +128,7 @@ export default (props:any) => {
         </Card>
         <Card title="发票信息列表" >
           <Table           
+            scroll={{x:'max-content'}}
             pagination={{
               pageSize: pageInfo.limit,
               total: pageInfo.total,

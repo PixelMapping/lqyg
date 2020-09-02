@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined ,FormOutlined,DeleteOutlined,LockOutlined,UnlockOutlined,createFromIconfontCN} from '@ant-design/icons';
+import {iconUrl} from '@/utils/utils'
+const MyIcon = createFromIconfontCN({
+  scriptUrl: iconUrl, // 在 iconfont.cn 上生成
+});
 import moment from 'moment';
 
-import { Card,Form,Input,DatePicker,Button,Table, message ,Modal ,Switch} from 'antd';
+import { Card,Form,Input,DatePicker,Button,Table, message ,Modal ,Switch ,Popconfirm } from 'antd';
 import {bankPage,switchBank,setDefault,addBank,uptBank,delBank} from '@/services/asset';
 
 import './index.less';
-import { checkSetleTaskInfo } from '@/services/settlement';
 
 
 const layout = {
@@ -40,22 +43,23 @@ export default (props:any) => {
       key:'action',
       render:(tags:any)=>(
         <div>
-          <Button type="link" onClick={edit.bind(this,tags)}>编辑</Button>
+          <Button type="link" icon={<FormOutlined />} onClick={edit.bind(this,tags)}>编辑</Button>
           {
             tags.useFlag==1?(
-              <Button type="link" onClick={setStatus.bind(this,tags.bankId,2)}>启用</Button>
+              <Button type="link" icon={<UnlockOutlined />} onClick={setStatus.bind(this,tags.bankId,2)}>启用</Button>
             ):(
-              <Button type="link" onClick={setStatus.bind(this,tags.bankId,1)}>禁用</Button>
+              <Button type="link" icon={<LockOutlined />} onClick={setStatus.bind(this,tags.bankId,1)}>禁用</Button>
             )
           }
-          <Button type="link" onClick={del.bind(this,tags.bankId)}>删除</Button>
+          <Popconfirm title='确定要删除吗？' onConfirm={del.bind(this,tags.bankId)} okText="是" cancelText="否">
+            <Button type="link" icon={<DeleteOutlined />}>删除</Button>
+          </Popconfirm>
           {
             tags.defaultFlag==1?(
-          <Button type="link" disabled>默认</Button>
+          <Button type="link" icon={<MyIcon type="icon-moren" />} disabled>默认</Button>
 
             ):(
-          <Button type="link" onClick={changeDefault.bind(this,tags.bankId,1)}>设为默认</Button>
-
+            <Button type="link" icon={<MyIcon type="icon-tubiao-danxuanmoren" />} onClick={changeDefault.bind(this,tags.bankId,1)}>设为默认</Button>
             )
           }
         </div>
@@ -179,7 +183,7 @@ export default (props:any) => {
         <Card title="银行账号查询" className="mb24" >
           <Form layout="inline" form={form} onFinish={getData}>
             <Form.Item className="w200" name="search">
-              <Input placeholder="银行账号/开户行"></Input>
+              <Input maxLength={20} placeholder="银行账号/开户行"></Input>
             </Form.Item>
             <Form.Item name="crtTime">
               <DatePicker placeholder="日期"></DatePicker>
@@ -207,13 +211,13 @@ export default (props:any) => {
           <Form form={modalForm} {...layout}>
             <p className="des">只可添加对公银行账户</p>
             <Form.Item label="银行名称" name="bankName" rules={[{ required: true, message: '请输入银行名称' }]}>
-              <Input placeholder="请输入银行名称"></Input>
+              <Input maxLength={20} placeholder="请输入银行名称"></Input>
             </Form.Item>
             <Form.Item label="银行卡号" name="bankAccount" rules={[{ required: true, message: '请输入银行卡号' }]}>
-              <Input placeholder="请输入银行卡号"></Input>
+              <Input maxLength={20} placeholder="请输入银行卡号"></Input>
             </Form.Item>
             <Form.Item label="开户行" name="openBank" rules={[{ required: true, message: '请输入开户行' }]}>
-              <Input placeholder="请输入开户行"></Input>
+              <Input maxLength={20} placeholder="请输入开户行"></Input>
             </Form.Item>
             <Form.Item label="是否默认" name="defaultFlag" valuePropName="checked">
               <Switch></Switch>

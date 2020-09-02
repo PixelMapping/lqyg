@@ -58,18 +58,16 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
 const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
   menuList.map((item) => {
     const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
-    if(list.indexOf(localItem.name)>-1){
+    if(list.indexOf(localItem.name)>-1||localItem.name=='首页'){
       return Authorized.check(item.authority, localItem, null) as MenuDataItem;
     }else if(localItem.path.indexOf('authority')>-1){
       return Authorized.check(item.authority, localItem, null) as MenuDataItem;
     }else{
       return {}
     }
-    // return Authorized.check(item.authority, localItem, null) as MenuDataItem;
   });
 
 const defaultFooterDom = (
-
   <div className="footer">©2020 智企舜联版权所有</div>
 );
 
@@ -121,7 +119,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     authority: undefined,
   };
   const { formatMessage } = useIntl();
-
   return (
     <ProLayout
       logo={logo}
@@ -136,7 +133,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
           return defaultDom;
         }
-
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [

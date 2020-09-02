@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Card, Form, Input, DatePicker, Button, Table, Modal, message ,Popconfirm} from 'antd';
+import { SearchOutlined ,FormOutlined ,DeleteOutlined ,createFromIconfontCN} from '@ant-design/icons';
+import { Card, Form, Input, Button, Table, Modal, message ,Popconfirm} from 'antd';
 import { addressPage, addressDefault, addressAdd, addressDelete, addressUpdate } from '@/services/invoice'
+import {iconUrl} from '@/utils/utils'
+const MyIcon = createFromIconfontCN({
+  scriptUrl: iconUrl, // 在 iconfont.cn 上生成
+});
 import './index.less';
 
 const layout = {
@@ -31,15 +35,15 @@ export default (props: any) => {
       key: '',
       render: (tags: any) => (
         <div>
-          <Button type="link" onClick={edit.bind(this, tags)}>编辑</Button>
+          <Button type="link" icon={<FormOutlined />} onClick={edit.bind(this, tags)}>编辑</Button>
           <Popconfirm title='确定要删除吗？' okText="是" cancelText="否" onConfirm={del.bind(this, tags.id)}>
-            <Button type="link">删除</Button>
+            <Button type="link" icon={<DeleteOutlined />}>删除</Button>
           </Popconfirm>
           {
             tags.useFlag == 1 ? (
-              <Button type="link" disabled>默认</Button>
+              <Button type="link" icon={<MyIcon type="icon-moren" />} disabled>默认</Button>
             ) : (
-                <Button type="link" onClick={setDafult.bind(this, tags.id)}>设为默认</Button>
+                <Button type="link" icon={<MyIcon type="icon-tubiao-danxuanmoren" />} onClick={setDafult.bind(this, tags.id)}>设为默认</Button>
               )
           }
           <span></span>
@@ -148,7 +152,7 @@ export default (props: any) => {
       <Card title="收件信息查询" className="mb24">
         <Form layout="inline" form={form}>
           <Form.Item className="w200" name="search">
-            <Input placeholder="姓名/手机号/地址"></Input>
+            <Input  maxLength={20} placeholder="姓名/手机号/地址"></Input>
           </Form.Item>
           <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
         </Form>
@@ -166,10 +170,10 @@ export default (props: any) => {
       <Modal title={isAdd ? '新增收件人' : '修改收件人'} visible={visible} onOk={handleOk} onCancel={handleCancel}>
         <Form {...layout} form={formUser}>
           <Form.Item label="姓名" name="addressee">
-            <Input placeholder="请输入姓名"></Input>
+            <Input  maxLength={10} placeholder="请输入姓名"></Input>
           </Form.Item>
           <Form.Item label="手机号码" name="addresseePhone">
-            <Input placeholder="请输入手机号码"></Input>
+            <Input  maxLength={11} placeholder="请输入手机号码"></Input>
           </Form.Item>
           <Form.Item label="地址" name="address">
             <Input.TextArea placeholder="请输入地址"></Input.TextArea>

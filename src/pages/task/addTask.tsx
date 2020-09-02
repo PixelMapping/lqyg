@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Form, Select, Input, Button, DatePicker, Checkbox, Switch, Row, Col, Cascader, message } from 'antd';
+import { Card, Form, Select, Input, Button, DatePicker, Checkbox, Switch, Row, Col, Cascader, message ,Radio } from 'antd';
 import moment from 'moment'
 import myContext from '@/components/ImgUpload/creatContext'
 import { allTaskType, getAllRegion, taskAdd, tempList } from '@/services/task'
 import ImgUpload from '@/components/ImgUpload'
 const { Option } = Select
 import './index.less';
+import FormSearch from '@ant-design/pro-table/lib/Form';
 
 const layout = {
   labelCol: { span: 2 },
@@ -19,13 +20,11 @@ export default (props:any) => {
   const [agreeList, setAgree] = useState([])
   const [form] = Form.useForm();
 
-
-
   useEffect(() => {
     getSelect()
     getArgee()
+    form.setFieldsValue({taskType:'1'})
   }, []);
-
 
   const getArgee = () => {
     tempList({}).then(res => {
@@ -41,7 +40,6 @@ export default (props:any) => {
       setCity(res.data)
     })
   }
-
 
   const release = () => {
     // console.log(form.)
@@ -74,8 +72,7 @@ export default (props:any) => {
           message.info('添加成功！')
           // form.resetFields()
           props.history.goBack();
-        }
-        
+        }        
       })
     })
   }
@@ -92,10 +89,16 @@ export default (props:any) => {
             <Cascader options={cityList} placeholder="请选择工作地区" />
           </Form.Item>
           <Form.Item label="任务名称" name="name" rules={[{ required: true, message: '请输入任务名称' }]}>
-            <Input placeholder="请输入任务名称"></Input>
+            <Input maxLength={20} placeholder="请输入任务名称"></Input>
           </Form.Item>
           <Form.Item label="任务描述" name="description" rules={[{ required: true, message: '请输入任务描述' }]}>
             <Input.TextArea placeholder="请输入任务描述"></Input.TextArea>
+          </Form.Item>
+          <Form.Item label="发布类型" name="taskType" rules={[{ required: true, message: '请选择发布任务类型' }]}>
+          <Radio.Group>
+            <Radio value="1">自然人任务</Radio>
+            <Radio value="2">个体户任务</Radio>
+          </Radio.Group>
           </Form.Item>
           <Form.Item label="上传附件" >
             <myContext.Provider value={{count:10,type:1}}>
@@ -124,7 +127,7 @@ export default (props:any) => {
             </Form.Item>
           </Form.Item>
           <Form.Item label="任务总预算" name="totalBudgetAmount" rules={[{ required: true, message: '请输入任务总预算' }]}>
-            <Input placeholder="请输入任务总预算"></Input>
+            <Input maxLength={10} placeholder="请输入任务总预算"></Input>
           </Form.Item>
           <Form.Item label="* 任务单价">
             <Form.Item
@@ -132,14 +135,14 @@ export default (props:any) => {
               rules={[{ required: true, message: "请输入最大单价" }]}
               style={{ display: 'inline-block', width: 'calc(50% - 4px)' }}
             >
-              <Input placeholder="请输入最小单价" />
+              <Input maxLength={10} placeholder="请输入最小单价" />
             </Form.Item>
             <Form.Item
               name="singleMaxAmount"
               rules={[{ required: true, message: "请输入最大单价" }]}
               style={{ display: 'inline-block', width: 'calc(50% - 4px)', marginLeft: '8px' }}
             >
-              <Input placeholder="请输入最大单价" />
+              <Input maxLength={10} placeholder="请输入最大单价" />
             </Form.Item>
           </Form.Item>
           <Form.Item label="* 需要人数" >

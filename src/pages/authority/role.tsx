@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Card, Form, Input, Button, Table, Modal, Select, message, Drawer, Tree, Row } from 'antd';
+import { SearchOutlined ,FormOutlined,DeleteOutlined,UserSwitchOutlined} from '@ant-design/icons';
+import { Card, Form, Input, Button, Table, Modal, Select, message, Drawer, Tree, Row,Popconfirm  } from 'antd';
 const { Option } = Select
-const { TreeNode } = Tree;
 import { roleList, addOrUpdateRole, menuList ,deleteRole,saveRoleMenut,configRoleMenu} from '@/services/auth'
 
 import './index.less';
@@ -34,9 +33,15 @@ export default (props: any) => {
       key: '',
       render: (tags: any) => (
         <div>
-          <Button type="link" onClick={edit.bind(this,tags)}>编辑</Button>
-          <Button type="link" onClick={openModal.bind(this,tags)}>授权</Button>
-          <Button type="link" onClick={del.bind(this,tags)}>删除</Button>
+          <Button type="link" icon={<FormOutlined />} onClick={edit.bind(this,tags)}>编辑</Button>
+          {
+            tags.type==1&&(
+              <Button type="link" icon={<UserSwitchOutlined />} onClick={openModal.bind(this,tags)}>授权</Button>
+            )
+          }
+          <Popconfirm placement="topLeft" title="确定删除吗？" onConfirm={del.bind(this,tags)} okText="是" cancelText="否">
+              <Button icon={<DeleteOutlined />} type="link">删除</Button>
+          </Popconfirm>
         </div>
       )
     },
@@ -54,7 +59,6 @@ export default (props: any) => {
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [expandedKeys, setExpandedKeys] = useState(['78']);
   const [checkedKeys, setCheckedKeys] = useState([]);
-  const [halfKeys,setHalfKeys] = useState([])
 
   useEffect(() => {
     getData()
@@ -131,6 +135,7 @@ export default (props: any) => {
   const add = () => {
     setVisible(true)
     setStatus(true)
+    
     modalForm.resetFields()
   }
 
@@ -190,12 +195,12 @@ export default (props: any) => {
   }
 
   const onCheck = (checkedKeys:any,checkedNodes:any) => {
-    setHalfKeys(checkedNodes.halfCheckedKeys)
+    // setHalfKeys(checkedNodes.halfCheckedKeys) 只传选中子节点给后台
     setCheckedKeys(checkedKeys)
   };
 
   const submit=()=>{
-    let arr = [...checkedKeys,...halfKeys]
+    let arr = [...checkedKeys]
     saveRoleMenut({
         roleId:cur.id,
         menuIds:arr.join(',')
@@ -210,14 +215,14 @@ export default (props: any) => {
   const onExpand = (expandedKeys:any) => {
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
-  };
+  };  
 
   return (
     <div className="detail">
       <Card title="角色查询" className="mb24">
         <Form layout="inline" form={form}>
           <Form.Item className="w200" name="name">
-            <Input placeholder="角色名称"></Input>
+            <Input maxLength={10} placeholder="角色名称"></Input>
           </Form.Item>
           <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
         </Form>
@@ -236,7 +241,7 @@ export default (props: any) => {
       <Modal title={isAdd ? '新增角色' : '修改角色'} onCancel={() => { setVisible(false) }} onOk={confirm} visible={visible}>
         <Form {...layout} form={modalForm}>
           <Form.Item label="角色名称" name="name" rules={[{ required: true }]}>
-            <Input placeholder="请输入角色名称"></Input>
+            <Input maxLength={10} placeholder="请输入角色名称"></Input>
           </Form.Item>
           <Form.Item label="角色类型" name="type" rules={[{ required: true }]}>
             <Select placeholder="请选择">

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, DatePicker, Input, Select, Button, Row, Table, Card, message } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined ,CheckCircleOutlined ,InfoCircleOutlined} from '@ant-design/icons';
 import { recordPage, confirmReceive } from '@/services/invoice'
 import moment from "moment";
-import { channelList} from '@/services/asset';
+import { invoiceChannelList } from '@/services/global'
 const { Option } = Select
 import './index.less';
 
@@ -64,8 +64,8 @@ export default (props) => {
       key: 'action',
       render: (tags: any) => (
         <div>
-          <Button type="link" disabled={ tags.invoiceStatus ==5 ? false : true} onClick={confirm.bind(this, tags.applyInvoiceId)}>确认收票</Button>
-          <Button type="link" onClick={toDetail.bind(this, tags.applyInvoiceId)}>详情</Button>
+          <Button type="link" icon={<CheckCircleOutlined />} disabled={ tags.invoiceStatus ==5 ? false : true} onClick={confirm.bind(this, tags.applyInvoiceId)}>确认收票</Button>
+          <Button type="link" icon={<InfoCircleOutlined />} onClick={toDetail.bind(this, tags.applyInvoiceId)}>查看详情</Button>
         </div>
 
       )
@@ -78,7 +78,7 @@ export default (props) => {
   }, []);
 
   const getList=()=>{
-    channelList({}).then(res=>{
+    invoiceChannelList({}).then(res=>{
       if(res){
         setList(res.data)
         // form.setFieldsValue({channelId:res.data[0].channelId})
@@ -129,7 +129,7 @@ export default (props) => {
       <Card title="记录查询" className="mb24">
         <Form form={form}>
           <Row>
-            <Form.Item className="w200 mr10" name="channelId">
+            <Form.Item className="w150 mr10" name="channelId">
             <Select placeholder="通道列表">
             {
               list.map((item:any)=>{
@@ -141,12 +141,12 @@ export default (props) => {
               </Select>
             </Form.Item>
             <Form.Item  name="startDate">
-              <DatePicker className="w200 mr10" placeholder="开始时间"></DatePicker>
+              <DatePicker className="w150 mr10" placeholder="开始时间"></DatePicker>
             </Form.Item>
             <Form.Item name="endDate">
-              <DatePicker className="w200 mr10" placeholder="结束时间"></DatePicker>
+              <DatePicker className="w150 mr10" placeholder="结束时间"></DatePicker>
             </Form.Item>
-            <Form.Item className="w200 mr10" name="invoiceStatus">
+            <Form.Item className="w150 mr10" name="invoiceStatus">
               <Select allowClear placeholder="开票状态">
                 <Option value="0">未开票</Option>
                 <Option value="1">审核中</Option>
@@ -157,7 +157,7 @@ export default (props) => {
                 <Option value="6">已签收</Option>
               </Select>
             </Form.Item>
-            <Form.Item className="w200 mr10" name="receiveStatus">
+            <Form.Item className="w150 mr10" name="receiveStatus">
               <Select allowClear placeholder="收票状态">
                 <Option value="1">已收票</Option>
                 <Option value="2">未收票</Option>
@@ -198,7 +198,7 @@ export default (props) => {
                 <Button>元</Button>
               </Input.Group>
             </Form.Item> */}
-            <Form.Item className="w200">
+            <Form.Item>
               <Button type="primary" icon={<SearchOutlined />} onClick={getData}>搜索</Button>
             </Form.Item>
           </Row>

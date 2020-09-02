@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined ,FormOutlined ,LockOutlined ,UnlockOutlined ,StopOutlined} from '@ant-design/icons';
 import { Card, Form, Input, Button, Table, Modal, Select, message ,Popconfirm} from 'antd';
 const { Option } = Select
 import { userList, addSubUser, getRoleList, forbidLogin, disableUser } from '@/services/auth'
@@ -38,16 +38,16 @@ export default (props: any) => {
       key: '',
       render: (tags: any) => (
         <div>
-          <Button type="link" onClick={edit.bind(this, tags)}>编辑</Button>
+          <Button type="link" icon={<FormOutlined />} onClick={edit.bind(this, tags)}>编辑</Button>
           {
             tags.loginFlag == 0 ? (
-              <Button type="link" onClick={forbid.bind(this, tags, 1)}>禁止登陆</Button>
+              <Button type="link" icon={<LockOutlined />} onClick={forbid.bind(this, tags, 1)}>禁止登陆</Button>
             ) : (
-                <Button type="link" onClick={forbid.bind(this, tags, 0)}>启用登陆</Button>
+                <Button type="link" icon={<UnlockOutlined />} onClick={forbid.bind(this, tags, 0)}>启用登陆</Button>
               )
           }
           <Popconfirm placement="top" title='确定要禁用吗？' onConfirm={disable.bind(this, tags)} okText="是" cancelText="否">
-            <Button type="link" >禁用</Button>
+            <Button type="link"  icon={<StopOutlined />}>禁用</Button>
           </Popconfirm>
         </div>
       )
@@ -60,6 +60,7 @@ export default (props: any) => {
   const [userId, setId] = useState('')
   const [modalForm] = Form.useForm()
   const [list, setList] = useState([])
+  const [isDisabled,setDisabled] = useState(false)
   const [pageInfo, setPage] = useState({ page: 1, limit: 20, total: 0 })
 
   useEffect(() => {
@@ -103,10 +104,16 @@ export default (props: any) => {
   const add = () => {
     setVisible(true)
     setStatus(true)
+    setDisabled(false)
     modalForm.resetFields()
   }
 
   const edit = (row: any) => {
+    if(row.type==0){
+      setDisabled(true)
+    }else{
+      setDisabled(false)
+    }
     setStatus(false)
     modalForm.setFieldsValue({ name: row.name, phone: row.phone, idcard: row.idcard, roleId: row.roleId })
     setVisible(true)
@@ -169,10 +176,10 @@ export default (props: any) => {
       <Card title="用户管理查询" className="mb24">
         <Form layout="inline" form={form}>
           <Form.Item className="w200" name="name">
-            <Input placeholder="姓名"></Input>
+            <Input maxLength={10} placeholder="姓名"></Input>
           </Form.Item>
           <Form.Item className="w200" name="phone">
-            <Input placeholder="登陆手机号"></Input>
+            <Input maxLength={11} placeholder="登陆手机号"></Input>
           </Form.Item>
           <Form.Item className="w200" name="roleId">
             <Select placeholder="角色" allowClear>
@@ -218,7 +225,7 @@ export default (props: any) => {
             <Input placeholder="请输入身份证号"></Input>
           </Form.Item>
           <Form.Item label="角色" name="roleId" rules={[{ required: true }]}>
-            <Select placeholder="请选择角色" >
+            <Select disabled={isDisabled} placeholder="请选择角色" >
               {
                 list.map((item: any) => {
                   return (

@@ -6,11 +6,6 @@ import './index.less';
 
 const columns1 = [
   {
-    title: '时间',
-    key: 'crtTime',
-    dataIndex: 'crtTime',
-  },
-  {
     title: '统一社会信用代码',
     key: 'creditCode',
     dataIndex: 'creditCode',
@@ -95,14 +90,13 @@ export default (props: any) => {
   ]
   useEffect(() => {
     if (props.location.state) {
-
-      getData(props.location.state.id)
+      console.log(props.location.state)
+      getData(props.location.state.id,props.location.state.batchNo||'')
     }
   }, []);
 
-  const getData = (id: string) => {
-
-    signPage({page:1,limit:200,userId:id}).then(res=>{
+  const getData = (id: string,batchNo:string) => {
+    signPage({page:1,limit:200,userId:id,batchNo:batchNo}).then(res=>{
       if(res.result){
         setData(React.setKey(res.data.rows))
       }
